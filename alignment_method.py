@@ -221,6 +221,7 @@ def align_identities(
     t_start_opt: float | None = None,
     t_end_opt: float | None = None,
     jerseys: list[int] | None = None,
+    conf_min: float = JERSEY_CONF_MIN,
 ) -> AlignmentResult:
     """
     Run the full identity alignment pipeline.
@@ -234,6 +235,7 @@ def align_identities(
         If None, uses the full overlapping range.
     jerseys : specific jersey numbers to include. If None, auto-detects
         from available parquet files.
+    conf_min : minimum jersey confidence threshold for optical tracks.
 
     Returns
     -------
@@ -250,7 +252,7 @@ def align_identities(
         )
 
     # Load and merge optical tracks
-    optical_players = load_and_merge_optical(tracking_parquet)
+    optical_players = load_and_merge_optical(tracking_parquet, conf_min=conf_min)
     available_optical = sorted(set(jerseys) & set(optical_players.keys()))
 
     # Determine analysis window
