@@ -26,7 +26,6 @@ echo "Uploading to $S3_PREFIX ..."
 aws s3 sync "$LOCAL_DIR" "$S3_PREFIX" \
     --exclude "*" \
     --include "*.parquet" \
-    --recursive \
     $DRYRUN
 
 echo "Done."
